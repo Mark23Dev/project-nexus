@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: ../../
-      dockerfile: infra/docker/Dockerfile.api
+      dockerfile: infrastructure/docker/Dockerfile.api
     volumes:
       - ../../:/app
       - static_volume:/app/staticfiles
@@ -22,7 +22,7 @@ services:
   worker:
     build:
       context: ../../
-      dockerfile: infra/docker/Dockerfile.worker
+      dockerfile: infrastructure/docker/Dockerfile.worker
     command: celery -A agrosphere worker --loglevel=info  # run Celery worker explicitly
     volumes:
       - ../../:/app
