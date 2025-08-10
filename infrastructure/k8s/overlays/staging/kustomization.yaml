@@ -1,0 +1,7 @@
+namespace: ecommerce
+
+resources:
+- ../../base
+
+patchesStrategicMerge:
+- patch-deployment.yaml

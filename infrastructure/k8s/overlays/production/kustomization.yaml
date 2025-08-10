@@ -1,0 +1,4 @@
+namespace: ecommerce
+
+resources:
+- ../../base

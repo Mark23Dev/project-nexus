@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: ecommerce           # same as deployment
+  labels:
+    app: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379                # exposed port inside cluster
+      targetPort: 6379          # container port
+  type: ClusterIP               # internal-only service

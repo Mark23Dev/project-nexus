@@ -1,0 +1,25 @@
+# Core Framework dependencies
+Django
+djangorestframework
+django-filter
+drf-spectacular
+djangorestframework-simplejwt #JWT authentication
+psycopg2-binary #PostgreSQL driver.
+
+drf-spectacular #Auto-generate API schema & Swagger UI.
+
+python-decouple #Manage sensitive settings via .env.
+
+django-cors-headers #Handle CORS for React/Vue/Angular frontend
+
+Pillow #Handle images
+
+argon2-cffi #Strong password hashing.
+
+pytz  #Timezone support.
+
+django-environ #Environment variable management.
+
+celery #Asynchronous task queue.
+
+redis #Message broker for Celery.

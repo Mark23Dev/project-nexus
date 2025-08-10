@@ -1,0 +1,7 @@
+resources:
+- namespace.yaml
+- deployment-api.yaml
+- deployment-worker.yaml
+- service-api.yaml
+- ingress.yaml
+- hpa.yaml

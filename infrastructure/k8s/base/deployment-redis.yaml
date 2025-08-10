@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.api
+    volumes:
+      - ../../:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    env_file:
+      - ../../.env.prod
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8000:8000"
+    networks:
+      - backend
+
+  worker:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.worker
+    command: celery -A agrosphere worker --loglevel=info  # run Celery worker explicitly
+    volumes:
+      - ../../:/app
+    env_file:
+      - ../../.env.prod
+    depends_on:
+      - redis
+      - db
+    networks:
+      - backend
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ../../.env.prod
+    networks:
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+networks:
+  backend:
